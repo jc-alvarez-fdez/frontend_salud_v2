@@ -1,0 +1,32 @@
+<header class="row">
+
+  <div class="col-2" id="social">
+    logo control medicación
+  </div>
+
+  <div class="col-8" id="logo">
+    <!-- <a [routerLink]='["/home"]'><img src="../../../assets/img/Star_Wars_Logo.svg" alt="Star Wars Logo" class="logo-starwars"/></a> -->
+  </div>
+
+  <div class="col-2">
+    <button class="btn login-button" type="button" [routerLink]='["/auth/login"]' (click)="toggleLogin()">
+      <span>
+        {{ paciente ? 'DESCONECTA' : 'ACCEDE' }}
+      </span>
+      <i></i>
+      <i [ngClass]="{'bi bi-person-fill-down': paciente, 'bi bi-person-up': !paciente}"></i>
+    </button>
+  </div>
+
+  <!--intentar con css el cambio de icono-->
+
+</header>
+
+<div class="row" id="paciente_auth">
+  @if (paciente) {
+    <p>
+      ¡Que la Fuerza te acompañe, joven <span class="destaca">{{ getPacienteNombre() | uppercase }}</span>!
+    </p>
+  }
+</div>
+

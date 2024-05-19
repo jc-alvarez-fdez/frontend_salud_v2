@@ -1,0 +1,35 @@
+ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  list-style: none;
+  text-decoration: none;
+  border-top: 1px solid var(--semiblanc);
+  border-bottom: 1px solid var(--semiblanc);
+  height: 50px;
+}
+
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 49px;
+  color: var(--semiblanc);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--starwars);
+  border-bottom: 2px solid white;
+}
+
+.router-link-active {
+  color: white;
+  border-bottom: 3px solid var(--starwars);
+  }
+
+
+
+

@@ -1,0 +1,69 @@
+<div class="container col-md-6 offset-md-3 mt-5">
+  @if (error) {
+    <div class="alert alert-danger">{{error}}</div>
+  }
+  <div class="card rounded-5 text-center">
+    <div class="mx-4">
+      <h3 class="mx-4 mt-5 mb-3">Crea tu cuenta</h3>
+    </div>
+    <div class="card-body mx-4">
+      <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="text-center">
+        <div class="mb-3">
+          <input type="text" formControlName="nombre" class="form-control py-3 bg-body-secondary border-0" placeholder="Nombre" [ngClass]="{ 'is-invalid': submitted && f['nombre'].errors }" />
+          @if (submitted && f['nombre'].errors) {
+            <div class="invalid-feedback">
+              @if (f['nombre'].errors['required']) {
+                <div>El nombre es obligatorio</div>
+              }
+            </div>
+          }
+        </div>
+        <div class="mb-3">
+          <input type="text" formControlName="apellidos" class="form-control py-3 bg-body-secondary border-0" placeholder="Apellidos" [ngClass]="{ 'is-invalid': submitted && f['apellidos'].errors }" />
+          @if (submitted && f['apellidos'].errors) {
+            <div class="invalid-feedback">
+              @if (f['apellidos'].errors['required']) {
+                <div>El apellido es obligatorio</div>
+              }
+            </div>
+          }
+        </div>
+        <div class="mb-3">
+          <input type="email" formControlName="email" class="form-control py-3 bg-body-secondary border-0" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+          @if (submitted && f['email'].errors) {
+            <div class="invalid-feedback">
+              @if (f['email'].errors['required']) {
+                <div>El email es obligatorio</div>
+              }
+              @if (submitted && f['email'].errors && f['email'].errors['pattern']) {
+                <div>El formato de email no es válido</div>
+              }
+            </div>
+          }
+        </div>
+        <div class="mb-3">
+          <input type="password" formControlName="password" class="form-control py-3 bg-body-secondary border-0" placeholder="Contraseña" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+          @if (submitted && f['password'].errors) {
+            <div class="invalid-feedback">
+              @if (f['password'].errors['required']) {
+                <div>La contraseña es obligatoria</div>
+              }
+              @if (f['password'].errors['minlength']) {
+                <div>La contraseña ha de tener al menos 6 caracteres</div>
+              }
+            </div>
+          }
+        </div>
+        <div>
+          <button [disabled]="loading" class="btn btn-primary rounded-pill form-control mt-4">
+            @if (loading) {
+              <span class="spinner-border spinner-border-sm me-1"></span>
+            }
+            Regístrate
+          </button>
+          <a routerLink="../login" class="btn btn-link mt-3 mb-4">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

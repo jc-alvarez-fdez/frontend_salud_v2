@@ -1,0 +1,82 @@
+<div class="container col-md-6 offset-md-3 mt-5">
+  @if (error) {
+    <div class="alert alert-danger">{{error}}</div>
+  }
+  @if (success) {
+    <div class="alert alert-success">{{success}}</div>
+  }
+  <div class="card rounded-5 text-center">
+    <div class="mx-4">
+      <h3 class="mx-4 mt-5 mb-3">Introduce tu email y contraseña</h3>
+      <p class="mx-4 mb-4">Inicia sesión en tu cuenta de Star Wars. Si no dispones de una, regístrate.</p>
+    </div>
+    <div class="card-body mx-4">
+      <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="text-center">
+        <div class="mb-3">
+          <input
+          type="email" formControlName="email"
+          class="form-control py-3 bg-body-secondary border-0" placeholder="Email"
+          [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+          @if (submitted && f['email'].errors) {
+            <div class="invalid-feedback">
+              @if (f['email'].errors['required']) {
+                <div>El email es obligatorio</div>
+              }
+            </div>
+          }
+        </div>
+        <div class="mb-3">
+          <input type="password" formControlName="password" class="form-control py-3 bg-body-secondary border-0" placeholder="Contraseña" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+          @if (submitted && f['password'].errors) {
+            <div class="invalid-feedback">
+              @if (f['password'].errors['required']) {
+                <div>La contraseña es obligatoria</div>
+              }
+              @if (submitted && f['email'].errors && f['email'].errors['pattern']) {
+                <div>El email no tiene un formato correcto</div>
+              }
+            </div>
+          }
+        </div>
+        <div>
+          <button [disabled]="loading" class="btn btn-primary rounded-pill form-control mt-4">
+            @if (loading) {
+              <span class="spinner-border spinner-border-sm"></span>
+            }
+            Identifícate
+          </button>
+          <a routerLink="../register" class="btn btn-link mt-3 mb-4">Regístrate</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Base tutorial autentificación JWT
+
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+  <div class="mb3">
+    <label for="email">Email</label>
+    <input type="mail" class="form-control" formControlName="email" >
+  </div>
+  <div class="mb3">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" formControlName="password" >
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </div>
+</form>
+
+-->
+
+
+
+
