@@ -63,7 +63,10 @@ export class ObtenMedicacionComponent implements OnInit {
   }
 
 
-  mostrarMedObtebidos() {
+
+
+
+  mostrarMedObtenidos() {
     if (this.nombreMed.trim().length === 0) {
       // No se busca si el nombre está vacío
       this.medObtenidosResults$ = EMPTY; // Emite un Observable vacío
@@ -77,6 +80,15 @@ export class ObtenMedicacionComponent implements OnInit {
       }));
     }
   }
+
+  cambiarMedObtenidos(): void {
+    {
+      // Esta función se llama cada vez que el término de búsqueda cambia
+      // No es necesario hacer nada aquí si solo queremos habilitar/deshabilitar el botón
+    }
+  }
+
+
 /*
   public verMedicamento(nregistro: string) {
     this.router.navigate(['/verMedObtenido', nregistro]);

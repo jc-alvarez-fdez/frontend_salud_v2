@@ -1,13 +1,20 @@
+
 <h1>Localice el medicamento</h1>
-<form class="d-flex">
+<form class="d-flex" (ngSubmit)="mostrarMedObtenidos()">
   <input
   id="nombreMed"
   type="text"
   [(ngModel)]="nombreMed"
+  (ngModelChange)="cambiarMedObtenidos()"
+  name="nombreMed"
+  placeholder="Nombre del medicamento"
   [ngModelOptions]=" { standalone:true }">
-  <button (click)="mostrarMedObtebidos()">Buscar</button>
+  <button type="submit" [disabled]="!nombreMed.trim()">Buscar</button>
+  <div *ngIf="!nombreMed.trim()">
+    <small>Por favor, introduce un término de búsqueda.</small>
+  </div>
 </form>
-  <p>Nombre escogido: {{ nombreMed }} </p>
+  <p>Buscando…: {{ nombreMed }} </p>
 
 
 @if (medObtenidosResults$ | async; as resultObject) {
@@ -26,38 +33,3 @@
 
 
 
-
-
-
-
-
-
-
-
-<!--
-<div class="container">
-  <h1>Localice el medicamento</h1>
-  <form class="d-flex">
-    <input type="text" [(ngModel)]="nombreMed" name="nombreMed">
-    <button (click)="getMedicamentosObtenidos(nombreMed)">Buscar</button>
-  </form>
-
-  <section>
-    <ul class="row">
-        @for (item of listMedObtenidos; track item.nombre) {
-            <li class="card" (click)="viewMedicamento(item.nregistro)">
-              <h3>{{ item.nombre }}</h3>
-              <p>{{ item.labtitular }}</p>
-            </li>
-        }
-      </ul>
-
-     @if (muchosResultados >= 25){
-        <p>Concrete más los términos de la búsqueda, hay demasiados resultados posibles.<br>
-        ej: "Simvastatina Cinfa</p>
-      }
-    </section>
-</div>
-
-
--->
