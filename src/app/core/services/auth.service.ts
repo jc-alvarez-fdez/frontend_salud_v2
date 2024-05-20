@@ -70,8 +70,8 @@ register(paciente: Paciente) {
         this._storageService.savePaciente(paciente); // Guarda la información del paciente
         this.pacienteSubject.next(paciente);
 
-        const redirectUrl = '/obten_medicacion';
-        this.router.navigate([redirectUrl]);
+        // const redirectUrl = '/obten_medicacion';
+        // this.router.navigate([redirectUrl]);
 
         return paciente;
     }));

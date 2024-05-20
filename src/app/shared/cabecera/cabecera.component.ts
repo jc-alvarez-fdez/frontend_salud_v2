@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Paciente } from '../../core/interfaces/paciente.interface';
 import { AuthService } from '../../core/services/auth.service';
@@ -15,7 +15,7 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './cabecera.component.html',
   styleUrl: './cabecera.component.scss'
 })
-export class CabeceraComponent {
+export class CabeceraComponent implements OnInit {
 
   paciente?: Paciente | null;
   pacienteNombre: string | null = null; // Para saludar al usuario al inciciar sesión
@@ -29,6 +29,12 @@ export class CabeceraComponent {
       // Actualizar el nombre del usuario después de iniciar sesión
       this.pacienteNombre = paciente?.nombre || null;
     });
+  }
+
+  ngOnInit(): void {
+      this._autService.paciente.subscribe(paciente => {
+        this.paciente = paciente;
+      });
   }
 
 

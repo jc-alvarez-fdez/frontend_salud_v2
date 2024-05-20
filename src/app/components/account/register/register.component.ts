@@ -8,9 +8,10 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule, F
 
 //import { ToastrService } from 'ngx-toastr';
 import { Paciente } from '../../../core/interfaces/paciente.interface';
-//import { ErrorService } from '../../../core/services/error.service';
+import { ErrorService } from '../../../core/services/error.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { first } from 'rxjs';
+import { StorageService } from '../../../core/services/storage.service';
 
 //import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
 //import { StorageService } from '../../../core/services/storage.service';
@@ -40,9 +41,17 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, // Para crear el formulario de registro
+    private route: ActivatedRoute, // Permite acceder a los parámetros de la ruta actual
     private router: Router, // Permite navegar a otras rutas en la aplicación
-    private authService: AuthService
-  ) {}
+    private _authService: AuthService,
+    private _storageService: StorageService
+  ) {
+    // verifica si el usuario ya ha iniciado sesión y lo redirige a la página de inicio si es así
+    if (this._authService.pacienteValue) {
+      this.router.navigate(['/']);
+    }
+  }
+
 
   ngOnInit(): void {
     this.formulario = this.fb.group({
@@ -51,6 +60,10 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+    // Muestra un mensaje de éxito
+    if (this.route.snapshot.queryParams['registered']) {
+      this.success = 'Se ha registrado correctamente';
+    }
   }
 
   // Getter para un fácil acceso a los campos del formulario
@@ -69,12 +82,14 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.register(this.formulario.value)
+    this._authService.register(this.formulario.value)
       .pipe(first())
       .subscribe({
         next: () => {
           this.success = 'Registro exitoso';
-          this.router.navigate(['/login'], { queryParams: { registered: true } });
+          //this.router.navigate(['/obten_medicacion'], { queryParams: { registered: true } });
+          this.router.navigate(['/obten_medicacion']);
+
         },
         error: error => {
           this.error = error;
@@ -82,7 +97,15 @@ export class RegisterComponent implements OnInit {
         }
       });
   }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
+
+
 }
+
+
 
 
 

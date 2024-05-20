@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService,
     private _storageService: StorageService
   ) {
-      // verifica si el usuario ya está iniciado sesión y lo redirige a la página de inicio si es así
+      // verifica si el usuario ya ha iniciado sesión y lo redirige a la página de inicio si es así
       if (this._authService.pacienteValue) {
         this.router.navigate(['/']);
     }
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
           return;
       }
 
-      this.loading = true;
+    this.loading = true;
     this._authService.login(this.f['email'].value, this.f['password'].value)
       .pipe(first())
       .subscribe({
