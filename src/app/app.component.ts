@@ -11,6 +11,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { Paciente } from './core/interfaces/paciente.interface';
 import { AuthService } from './core/services/auth.service';
 
+
+
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -27,6 +30,7 @@ import { AuthService } from './core/services/auth.service';
     RegisterComponent,
     HomeComponent,
     CabeceraComponent,
+
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

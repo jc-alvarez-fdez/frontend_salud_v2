@@ -1,0 +1,28 @@
+<div class="container">
+  <h1>Mis medicamentos</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nombre del medicamento</th>
+        <th scope="col">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of listMisMedicamentos; track $index) {
+        <tr>
+          <td>
+            {{item.nombre}}
+          </td>
+          <td>
+            <div>
+              <button type="button" class="btn btn-primary btn-sm">Ver detalles</button>
+              <button type="button" class="btn btn-primary btn-sm">Eliminar</button>
+            </div>
+        </td>
+        </tr>
+      }
+
+    </tbody>
+  </table>
+</div>

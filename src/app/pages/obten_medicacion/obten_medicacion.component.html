@@ -1,0 +1,63 @@
+<h1>Localice el medicamento</h1>
+<form class="d-flex">
+  <input
+  id="nombreMed"
+  type="text"
+  [(ngModel)]="nombreMed"
+  [ngModelOptions]=" { standalone:true }">
+  <button (click)="mostrarMedObtebidos()">Buscar</button>
+</form>
+  <p>Nombre escogido: {{ nombreMed }} </p>
+
+
+@if (medObtenidosResults$ | async; as resultObject) {
+  <ul class="row">
+    @for(item of resultObject.resultados; track item.nombre) {
+      <li class="" >
+        <app-medicamento-detail [MedObtenidoInfo]="item" />
+      </li>
+    }
+  </ul>
+}
+
+@if(errorMessage){
+  <app-error-message [errorMessage]="errorMessage" />
+}
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<div class="container">
+  <h1>Localice el medicamento</h1>
+  <form class="d-flex">
+    <input type="text" [(ngModel)]="nombreMed" name="nombreMed">
+    <button (click)="getMedicamentosObtenidos(nombreMed)">Buscar</button>
+  </form>
+
+  <section>
+    <ul class="row">
+        @for (item of listMedObtenidos; track item.nombre) {
+            <li class="card" (click)="viewMedicamento(item.nregistro)">
+              <h3>{{ item.nombre }}</h3>
+              <p>{{ item.labtitular }}</p>
+            </li>
+        }
+      </ul>
+
+     @if (muchosResultados >= 25){
+        <p>Concrete más los términos de la búsqueda, hay demasiados resultados posibles.<br>
+        ej: "Simvastatina Cinfa</p>
+      }
+    </section>
+</div>
+
+
+-->

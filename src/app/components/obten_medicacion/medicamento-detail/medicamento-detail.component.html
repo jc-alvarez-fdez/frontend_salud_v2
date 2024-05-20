@@ -1,0 +1,35 @@
+<!-- <ul class="container">
+  <li class="col-4">
+    <div>
+      <img src="{{ MedObtenidoInfo.fotos[0].url }}" class="card-img-top" alt="Envase {{MedObtenidoInfo.nombre}}">
+    </div>
+ <div>
+      <h4>{{ MedObtenidoInfo.nombre }}</h4>
+      <p class="card-text">{{MedObtenidoInfo.viasAdministracion[0].nombre}}</p>
+    </div>
+
+    <div>
+      <button class="btn btn-primary">Añadir a mis medicamentos</button>
+    </div>
+</ul> -->
+
+
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">{{ MedObtenidoInfo.nombre }}</h2>
+    <h3>{{ MedObtenidoInfo.labtitular }}</h3>
+    <p class="card-text">{{MedObtenidoInfo.viasAdministracion[0].nombre}}</p>
+    <p class="card-text">{{MedObtenidoInfo.formaFarmaceutica?.nombre}} </p>
+
+    <button type="button" class="btn btn-primary" (click)="addMedicamentoSeleccionado()">Añadir a mis medicamentos</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+

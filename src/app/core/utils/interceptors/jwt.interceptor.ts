@@ -7,14 +7,15 @@ import { AuthService } from '../../services/auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private _auhtService: AuthService) { }
+    //constructor(private _auhtService: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      // Agregar withCredentials a todas las solicitudes
-      request = request.clone({
+      // Clona la solicitud para añadir 'withCredentials: true'
+      const clonedRequest = request.clone({
         withCredentials: true
       });
 
-      return next.handle(request);
+      // Pasa la solicitud clonada al siguiente handler
+      return next.handle(clonedRequest);
     }
 }
