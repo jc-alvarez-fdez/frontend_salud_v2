@@ -1,0 +1,89 @@
+<div class="container col-md-6 offset-md-3 mt-5">
+  @if (error) {
+    <div class="alert alert-danger">{{error}}</div>
+  }
+  @if (success) {
+    <div class="alert alert-success">{{success}}</div>
+  }
+  <div class="card rounded-5 text-center">
+    <div class="mx-4">
+      <h3 class="mx-4 mt-5 mb-3">Introduce tu email y contraseña</h3>
+      <p class="mx-4 mb-4">Inicia sesión en tu cuenta de Star Wars. Si no dispones de una, regístrate.</p>
+      <p>{{ paciente?.nombre }}</p>
+      <p>{{ paciente?.apellidos }}</p>
+      <p>{{ paciente?.fecha_nacimiento }}</p>
+      <p>{{ paciente?.dni }}</p>
+      <p>{{ paciente?.telefono }}</p>
+      <p>{{ paciente?.domicilio }}</p>
+      <p>{{ paciente?.cp }}</p>
+      <p>{{ paciente?.poblacion }}</p>
+      <p>{{ paciente?.provincia }}</p>
+
+    </div>
+    <div class="card-body mx-4">
+
+      <form [formGroup]="formPaciente" (ngSubmit)="addPaciente()">
+
+          <input formControlName="nombre" type="text" class="form-control mt-2" value="{{ paciente?.nombre }}">
+          <span class="invalid" *ngIf="formPaciente.get('nombre')?.hasError('required') && formPaciente.get('nombre')?.touched">
+            El campo Nombre <strong>es obligatorio</strong>
+          </span>
+
+          <input formControlName="apellidos" type="text" class="form-control mt-2">
+          <span  class="invalid" *ngIf="formPaciente.get('apellidos')?.hasError('required') && formPaciente.get('apellidos')?.touched">
+            El campo Apellidos <strong>es obligatorio</strong>
+          </span>
+
+          <input formControlName="fecha_nacimiento" type="date" class="form-control mt-2">
+          <span  class="invalid" *ngIf="formPaciente.get('fecha_nacimiento')?.hasError('required') && formPaciente.get('fecha_nacimiento')?.touched">
+            El campo Fecha de nacimiento <strong>es obligatorio</strong>
+          </span>
+
+          <input formControlName="dni" type="text" class="form-control mt-2">
+          <span class="invalid" *ngIf="formPaciente.get('dni')?.hasError('required') && formPaciente.get('dni')?.touched">
+            El campo DNI <strong>es obligatorio</strong>
+          </span>
+
+          <input formControlName="telefono" type="text" class="form-control mt-2">
+          <span class="invalid" *ngIf="formPaciente.get('telefono')?.hasError('required') && formPaciente.get('telefono')?.touched">
+            El campo Teléfono <strong>es obligatorio</strong>
+          </span>
+
+<!--           <input formControlName="email" type="text" class="form-control mt-2"  placeholder="nombre@dominio.com" readonly>
+          <span class="invalid" *ngIf="formPaciente.get('email')?.hasError('required') && formPaciente.get('email')?.touched">
+            El campo E-mail <strong>es obligatorio</strong>
+          </span> -->
+
+          <input formControlName="domicilio" type="text" class="form-control mt-2">
+          <span class="invalid" *ngIf="formPaciente.get('domicilio')?.hasError('required') && formPaciente.get('domicilio')?.touched">
+            El campo Domicilio <strong>es obligatorio</strong>
+          </span>
+
+          <input formControlName="cp" type="number" class="form-control mt-2">
+          <span class="invalid" *ngIf="formPaciente.get('cp')?.hasError('required') && formPaciente.get('cp')?.touched">
+            El campo CP <strong>es obligatorio</strong>
+          </span>
+
+          <input formControlName="poblacion" type="text" class="form-control mt-2">
+          <span class="invalid" *ngIf="formPaciente.get('poblacion')?.hasError('required') && formPaciente.get('poblacion')?.touched">
+            El campo Población <strong>es obligatorio</strong>
+          </span>
+
+          <input formControlName="provincia" type="text" class="form-control mt-2">
+          <span class="invalid" *ngIf="formPaciente.get('provincia')?.hasError('required') && formPaciente.get('provincia')?.touched">
+            El campo Provincia <strong>es obligatorio</strong>
+          </span>
+
+          <div class="row mt-4 text-center">
+            <div class="col-6">
+              <button type="button" class="btn btn-secondary" routerLink="/home">Volver</button>
+           </div>
+            <div class="col-6">
+              <button [disabled]="formPaciente.invalid" class="btn btn-primary">Aceptar</button>
+            </div>
+           </div>
+      </form>
+    </div>
+  </div>
+</div>
+

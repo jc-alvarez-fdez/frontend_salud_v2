@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Paciente } from '../../core/interfaces/paciente.interface';
 import { AuthService } from '../../core/services/auth.service';
 
+
 @Component({
   selector: 'app-cabecera',
   standalone: true,
@@ -19,7 +20,7 @@ export class CabeceraComponent implements OnInit {
 
   paciente?: Paciente | null;
   pacienteNombre: string | null = null; // Para saludar al usuario al inciciar sesión
-
+  pacienteId: number | null = null;
 
   constructor(
     private _autService: AuthService,
@@ -28,6 +29,8 @@ export class CabeceraComponent implements OnInit {
       this.paciente = paciente;
       // Actualizar el nombre del usuario después de iniciar sesión
       this.pacienteNombre = paciente?.nombre || null;
+      this.pacienteId = paciente?.id_paciente || null;
+      console.log('id del paciente:', this.pacienteId)
     });
   }
 
@@ -55,6 +58,8 @@ export class CabeceraComponent implements OnInit {
     getPacienteNombre(): string | null {
       return this.pacienteNombre;
   }
+
+  
 
 
 }

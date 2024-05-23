@@ -4,8 +4,7 @@
 import { Injectable } from '@angular/core';
 
 const PACIENTE_KEY = 'auth-paciente'; // Clave para almacenar la información del paciente
-const TOKEN_KEY = 'auth-token'; // Clave para almacenar el token de acceso
-
+console.log('pacientekey', PACIENTE_KEY);
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class StorageService {
   // Almacena la información del paciente en el almacenamiento de sesión
   public savePaciente(paciente: any): void {
     window.sessionStorage.removeItem(PACIENTE_KEY); // Elimina cualquier usuario previamente guardado con la clave PACIENTE_KEY
-    window.sessionStorage.setItem(PACIENTE_KEY, JSON.stringify(paciente)); //Almacena la cadena JSON en el almacenamiento de sesión
+    window.sessionStorage.setItem(PACIENTE_KEY, JSON.stringify(paciente)); // Almacena la cadena JSON en el almacenamiento de sesión
   }
 
   public getPaciente(): any { //Recupera info paciente del almacenamiento de sesión
@@ -33,6 +32,7 @@ export class StorageService {
 
     return {};
   }
+
 
 
   public isLoggedIn(): boolean { // Comprueba si hay información de paciente almacenada

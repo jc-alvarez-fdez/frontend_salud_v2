@@ -4,3 +4,12 @@
 html, body {
   height: 100%;
 }
+
+body {
+  background-image: url(./assets/img/medicament-que-es.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-attachment: fixed;
+  padding: 2em;
+}
