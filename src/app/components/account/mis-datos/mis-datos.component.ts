@@ -9,6 +9,7 @@ import { PacienteService } from '../../../core/services/paciente.service';
 import { ProgressComponent } from '../../../shared/progress/progress.component';
 import { StorageService } from '../../../core/services/storage.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-mis-datos',
@@ -29,7 +30,7 @@ export class MisDatosComponent implements OnInit {
   operacion: string = "Editar"; // Operación actual (añadir o editar)
   error?: string;
   success?: string;
-  paciente?: Paciente;
+  paciente!: Paciente;
   pacienteId: number = 0; // Inicializar pacienteId con un valor predeterminado
 
   constructor(
@@ -79,20 +80,20 @@ export class MisDatosComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.pacienteId !== 0) {
-      // es editar
-      this.operacion = 'Editar ';
+      this.operacion = 'Editar';
+      // Llama a getPaciente después de que el formulario se haya inicializado
+      this.formPaciente.reset(); // Reiniciar el formulario para evitar el error NG01002
       this.getPaciente(this.pacienteId);
     }
   }
 
   addPaciente() {
-    // Validar el formulario
     if (!this.formPaciente.valid) {
       return;
     }
 
-    // Crear un objeto paciente con los valores del formulario
     const paciente: Paciente = {
+      id_paciente: this.pacienteId,
       nombre: this.formPaciente.value.nombre,
       apellidos: this.formPaciente.value.apellidos,
       fecha_nacimiento: this.formPaciente.value.fecha_nacimiento,
@@ -101,13 +102,30 @@ export class MisDatosComponent implements OnInit {
       domicilio: this.formPaciente.value.domicilio,
       cp: this.formPaciente.value.cp,
       poblacion: this.formPaciente.value.poblacion,
-      provincia: this.formPaciente.value.provincia
+      provincia: this.formPaciente.value.provincia,
     };
 
-    this.loading = true;  // Activar indicador de carga
+    this.loading = true;
 
-    // Si hay un ID, estamos en modo edición
-    if (this.pacienteId !== 0) {
+    this._pacienteService.updatePaciente(this.pacienteId, paciente).subscribe({
+      next: () => {
+        this.loading = false;
+        this.toastr.info(`El paciente ${paciente.nombre} se ha actualizado`, 'Actualizar paciente');
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        this.loading = false;
+        this.error = 'Error al actualizar el paciente';
+        console.error(error);
+      },
+      complete: () => {
+        console.log('Paciente actualizado correctamente.');
+      }
+    });
+  }
+
+    // Si hay un ID, estamos en modo edición (cambio esta version)
+    /* if (this.pacienteId !== 0) {
       paciente.id_paciente = this.pacienteId;
       this._pacienteService.updatePaciente(this.pacienteId, paciente).subscribe(() => {
         this.loading = false;
@@ -115,37 +133,33 @@ export class MisDatosComponent implements OnInit {
         this.router.navigate(['/home']);
       });
     }
-    /* else {
+    else {
       // Si no hay ID, estamos en modo añadir
       this._pacienteService.savePaciente(paciente).subscribe(() => {
         this.toastr.success(`El paciente ${paciente.nombre} se ha añadido`, 'Nuevo paciente');
         this.loading = false;
         this.router.navigate(['/listado-pacientes']);
       });
-    } */
+    }
   }
+  */
 
   getPaciente(pacienteId: number) {
-    this.loading = true;  // Activar indicador de carga
+    this.loading = true;
     this._pacienteService.getPaciente(pacienteId).subscribe((data: Paciente) => {
       console.log(data);
       this.loading = false;
-      //Verificación de los campos al asignar valores: Al establecer los valores del formulario, se asegura de que cada campo tenga un valor por defecto ('') si data no lo proporciona.
-
-      if (data) {
-        // Rellenar el formulario con los datos obtenidos del paciente
-        this.formPaciente.setValue({
-          nombre: data.nombre || 'Intr',
-          apellidos: data.apellidos !== null && data.apellidos !== undefined ? data.apellidos : 'a',
-          fecha_nacimiento: data.fecha_nacimiento || '2024/12/12',
-          dni: data.dni || '12345678W',
-          telefono: data.telefono || '123456789',
-          domicilio: data.domicilio || 'dsad',
-          cp: data.cp || 22222,
-          poblacion: data.poblacion || 'dasdas',
-          provincia: data.provincia || 'asdsad'
-      });
-    }
+      this.formPaciente.patchValue({
+            nombre: data.nombre ?? '',
+            apellidos: data.apellidos ?? '',
+            fecha_nacimiento: data.fecha_nacimiento ?? '',
+            dni: data.dni ?? '',
+            telefono: data.telefono ?? '',
+            domicilio: data.domicilio ?? '',
+            cp: data.cp ?? '',
+            poblacion: data.poblacion ?? '',
+            provincia: data.provincia ?? '',
+          })
     });
   }
 }

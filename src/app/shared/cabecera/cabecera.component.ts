@@ -19,7 +19,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class CabeceraComponent implements OnInit {
 
   paciente?: Paciente | null;
-  pacienteNombre: string | null = null; // Para saludar al usuario al inciciar sesión
+  pacienteNombre: string | null = null; // Para saludar al usuario al iniciiar sesión
   pacienteId: number | null = null;
 
   constructor(

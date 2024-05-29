@@ -1,44 +1,85 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, NgForOf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MisMedicamentosService } from '../../core/services/mis-medicamentos.service';
-import { MiMedicamento } from '../../core/interfaces/medicamento.interface';
+import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { MiMedicamentoDetailComponent } from '../../components/mis_medicamentos/mi-medicamento-detail/mi-medicamento-detail.component';
+import { MiMedicamento, MiMedicamentoResults } from '../../core/interfaces/medicamento.interface';
 import { StorageService } from '../../core/services/storage.service';
-import { Router } from '@angular/router';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { EMPTY, Observable, catchError } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { ErrorMessageComponent } from '../../components/obten_medicacion/error-message/error-message.component';
+import { MedicamentoDetailComponent } from '../../components/obten_medicacion/medicamento-detail/medicamento-detail.component';
 
 
 @Component({
   selector: 'app-mis-medicamentos',
   standalone: true,
   imports: [
-  CommonModule
+  FormsModule,
+  CommonModule,
+  HttpClientModule,
+  NgForOf,
+  RouterLink,
+  AsyncPipe, MedicamentoDetailComponent, ErrorMessageComponent,
+  // tutorial Programación en español
+  MiMedicamentoDetailComponent
+
+
   ],
   templateUrl: './mis-medicamentos.component.html',
   styleUrl: './mis-medicamentos.component.scss'
 })
 export class MisMedicamentosComponent implements OnInit {
 
-  listMisMedicamentos: MiMedicamento[] = [];
+  public miMedicamentoResults$!: Observable<MiMedicamentoResults>;
+  //listMisMedicamentos: MiMedicamento[] = [];
+  //loading: boolean = false;
+  public errorMessage!: string;
+
 
   constructor(
+    private http: HttpClient,
     private router: Router,
-    private _misMedicamentos: MisMedicamentosService,
+    private _misMedicamentosService: MisMedicamentosService,
     private _storageService: StorageService,
+    private toastr: ToastrService
     ) {}
 
   ngOnInit(): void {
     // Verifica si el usuario está autenticado
     if (!this._storageService.isLoggedIn()) {
       // Si el usuario no está autenticado, redirige a la página de inicio de sesión
-      this.router.navigate(['/login']);
+      this.router.navigate(['auth/login']);
       return;
-    }
+    };
+
+    this.mostrarListMisMedicamentos()
+
+  }
+  
+
+  mostrarListMisMedicamentos(){
+    this.miMedicamentoResults$ = this._misMedicamentosService.getListMisMedicamentos().pipe(catchError((error: string) => {
+      this.errorMessage = error;
+      return EMPTY
+    }));
   }
 
-  getMisMedicamentos(){
-    this._misMedicamentos.getMisMedicamentos().subscribe(data => {
-     this.listMisMedicamentos = data;
-    })
-  }
+  deleteMiMedicamento(id: number) {
+    this._misMedicamentosService.deleteMiMedicamento(id)
+      .subscribe(data => {
+       console.dir(data);
+        this.mostrarListMisMedicamentos();
+        this.toastr.warning('El paciente se ha eliminado de la base de datos', 'Medicamento eliminado')
+    });
+    }
+
+
+
+
+
+
 
 }

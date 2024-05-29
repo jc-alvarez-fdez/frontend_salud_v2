@@ -85,3 +85,10 @@ export interface MiMedicamento {
   imagen?: string,
   consejos?: string
 }
+
+
+export interface MiMedicamentoResults {
+  code?: number,
+  message?: string,
+  data?: MiMedicamento []
+ }

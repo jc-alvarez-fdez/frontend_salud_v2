@@ -14,7 +14,7 @@
       <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="text-center">
         <div class="mb-3">
           <input
-          type="email" formControlName="email"
+          type="email" formControlName="email" 
           class="form-control py-3 bg-body-secondary border-0" placeholder="Email"
           [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
           @if (submitted && f['email'].errors) {

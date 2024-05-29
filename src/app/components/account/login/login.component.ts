@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   this.formulario = this.fb.group ({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['mail111@mail.com', Validators.required],
+      password: ['prueba111', Validators.required],
     });
     // Muestra un mensaje de éxito
     if (this.route.snapshot.queryParams['registered']) {
