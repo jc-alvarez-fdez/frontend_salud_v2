@@ -43,15 +43,15 @@ export class MisDatosComponent implements OnInit {
   ) {
     // Inicializar el formulario con los campos y validadores requeridos
     this.formPaciente = this.fb.group({
-      nombre: ['Nombre', Validators.required],
-      apellidos: ['Apellidos', Validators.required],
-      fecha_nacimiento: ['12/12/2024', Validators.required],
-      dni: ['12345678W', Validators.required],
-      telefono: ['123456789', Validators.required],
-      domicilio: ['Calle', Validators.required],
-      cp: ['00000', Validators.required],
-      poblacion: ['Población', Validators.required],
-      provincia: ['Provincia', Validators.required],
+      nombre: ['', Validators.required],
+      apellidos: ['', Validators.required],
+      fecha_nacimiento: ['', Validators.required],
+      dni: ['', Validators.required],
+      telefono: ['', Validators.required],
+      domicilio: ['', Validators.required],
+      cp: ['', Validators.required],
+      poblacion: ['', Validators.required],
+      provincia: ['', Validators.required],
     });
 
      // Verifica si el usuario está autenticado
@@ -136,8 +136,8 @@ export class MisDatosComponent implements OnInit {
         // Rellenar el formulario con los datos obtenidos del paciente
         this.formPaciente.setValue({
           nombre: data.nombre || 'Intr',
-          apellidos: data.apellidos || 'aa',
-          fecha_nacimiento: data.fecha_nacimiento || '12/12/2024',
+          apellidos: data.apellidos !== null && data.apellidos !== undefined ? data.apellidos : 'a',
+          fecha_nacimiento: data.fecha_nacimiento || '2024/12/12',
           dni: data.dni || '12345678W',
           telefono: data.telefono || '123456789',
           domicilio: data.domicilio || 'dsad',
