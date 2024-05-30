@@ -5,7 +5,7 @@
     <ul class="row">
       @for(item of resultObject.data; track item.nombre) {
         <li class="" >
-          <app-mi-medicamento-detail [MisMedicamentosInfo]="item" />
+          <app-mi-medicamento-list [MisMedicamentosInfo]="item" />
         </li>
       }
     </ul>

@@ -7,15 +7,15 @@ import { MisMedicamentosService } from '../../../core/services/mis-medicamentos.
 
 
 @Component({
-  selector: 'app-mi-medicamento-detail',
+  selector: 'app-mi-medicamento-list',
   standalone: true,
   imports: [
     RouterModule
   ],
-  templateUrl: './mi-medicamento-detail.component.html',
-  styleUrl: './mi-medicamento-detail.component.scss'
+  templateUrl: './mi-medicamento-list.component.html',
+  styleUrl: './mi-medicamento-list.component.scss'
 })
-export class MiMedicamentoDetailComponent {
+export class MiMedicamentoListComponent {
   @Input() MisMedicamentosInfo!: MiMedicamento;
 
   constructor(

@@ -3,14 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { MisMedicamentosService } from '../../core/services/mis-medicamentos.service';
 import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { MiMedicamentoDetailComponent } from '../../components/mis_medicamentos/mi-medicamento-detail/mi-medicamento-detail.component';
+import { MiMedicamentoListComponent } from '../../components/mis_medicamentos/mi-medicamento-list/mi-medicamento-list.component';
 import { MiMedicamento, MiMedicamentoResults } from '../../core/interfaces/medicamento.interface';
 import { StorageService } from '../../core/services/storage.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { EMPTY, Observable, catchError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ErrorMessageComponent } from '../../components/obten_medicacion/error-message/error-message.component';
-import { MedicamentoDetailComponent } from '../../components/obten_medicacion/medicamento-detail/medicamento-detail.component';
 
 
 @Component({
@@ -22,9 +21,8 @@ import { MedicamentoDetailComponent } from '../../components/obten_medicacion/me
   HttpClientModule,
   NgForOf,
   RouterLink,
-  AsyncPipe, MedicamentoDetailComponent, ErrorMessageComponent,
+  AsyncPipe, MiMedicamentoListComponent, ErrorMessageComponent,
   // tutorial Programación en español
-  MiMedicamentoDetailComponent
 
 
   ],
@@ -58,7 +56,7 @@ export class MisMedicamentosComponent implements OnInit {
     this.mostrarListMisMedicamentos()
 
   }
-  
+
 
   mostrarListMisMedicamentos(){
     this.miMedicamentoResults$ = this._misMedicamentosService.getListMisMedicamentos().pipe(catchError((error: string) => {
